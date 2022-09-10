@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './Filterbox.module.css'
 const Filterbox = () => {
   return (

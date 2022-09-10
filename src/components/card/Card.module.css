@@ -10,6 +10,7 @@
   display: block;
   margin: auto;
   padding: 16px 0;
+  height: 100px;
 }
 
 .card__details {
