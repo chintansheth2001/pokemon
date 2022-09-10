@@ -3,7 +3,7 @@ import styles from './Filterbox.module.css'
 
 import axios from 'axios'
 
-const Filterbox = () => {
+const Filterbox = ({ handleOnEnter }) => {
   const [allPokemon, setAllPokemon] = useState([])
   const [loadingStatus, setLoadingStatus] = useState(true)
   const [searchText, setSearchText] = useState('')
@@ -24,12 +24,41 @@ const Filterbox = () => {
 
   }, [])
 
+  useEffect(() => {
+    const handleCloseMenu = (e) => {
+      if (e.target.id !== 'filter') {
+        setSearchFocus(false)
+      }
+    }
+    document.addEventListener('click', handleCloseMenu)
+    return () => document.body.removeEventListener('click', handleCloseMenu)
+  }, [])
+
+  const inputChange = (event) => {
+    setSearchText(event.target.value)
+  }
+
+  const handleClick = (show, name) => {
+    setSearchFocus(false)
+    handleOnEnter(show, name)
+  }
+
+  const handleKeyUp = (show, name, e) => {
+    if (e.key === 'Enter') {
+      setSearchFocus(false)
+      handleOnEnter(show, name)
+
+    }
+  }
+
+
   if (loadingStatus) {
     return 'Show Loader'
   }
 
   return (
-    <div className={styles['wrapper']}>
+    <div className={styles['wrapper']}
+    >
       <input
         className={styles['filter']}
         type="text" id="filter"
@@ -38,12 +67,10 @@ const Filterbox = () => {
         onFocus={() => {
           setSearchFocus(true)
         }}
-        onBlur={() => {
-          setSearchFocus(false)
-        }}
 
-        onChange={(event) => {
-          setSearchText(event.target.value)
+
+        onKeyUp={(event) => {
+          inputChange(event)
         }}
       />
       {searchFocus &&
@@ -57,7 +84,13 @@ const Filterbox = () => {
 
           }).map((val, key) => {
             return (
-              <div className={styles['filter__item']} key={key}>{val.name}</div>
+              <div
+                onClick={(e) => handleClick(true, val.name)}
+                onKeyUp={(e) => handleKeyUp(true, val.name, e)}
+                className={styles['filter__item']}
+                key={key} tabIndex="0">
+                {val.name}
+              </div>
             )
 
           })}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 
 import styles from './Card.module.css'
-const Card = ({ pokemon }) => {
+const Card = ({ pokemon, handleClick }) => {
 
 
   const [pokemonItem, setPokemonItem] = useState({})
@@ -27,9 +27,8 @@ const Card = ({ pokemon }) => {
 
   return (
     <>
-      <div className={styles['card']}>
+      <div className={styles['card']} onClick={() => handleClick(true, pokemonItem.name)}>
         <img className={styles['card__img']} src={imageUrl} alt="" />
-
         <div className={styles['card__details']}>
           <div className={styles['name']}><strong>{pokemonItem.name}</strong></div>
           <div className={styles['pokemon-id']}># {pokemonItem.id}</div>
