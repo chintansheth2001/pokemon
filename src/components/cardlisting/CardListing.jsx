@@ -5,7 +5,6 @@ import Pagination from '../pagination/Pagination';
 
 import axios from 'axios'
 
-
 import styles from './CardListing.module.css'
 
 
