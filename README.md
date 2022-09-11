@@ -3,9 +3,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### Details
-Next and Previous load otehr 20 cards
-In search, input type any pokemon name and click on dropdown list.
-In listing click on any card.
+- Next and Previous load otehr 20 cards
+- In search, input type any pokemon name and click on dropdown list.
+- In listing click on any card.
 
 ### `Project Images`
 ![image](https://github.com/chintansheth2001/pokemon/blob/main/readme/img1.jpeg?raw=true)
