@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios'
 
 import styles from './CardDetails.module.css'
 import bstyles from '../pagination/Pagination.module.css'
-const Card = ({ name, handleClick }) => {
+const CardDetails = () => {
 
 
   const [pokemonItem, setPokemonItem] = useState({})
@@ -12,12 +13,19 @@ const Card = ({ name, handleClick }) => {
   const [moves, setMoves] = useState([])
   const [stats, setStats] = useState([])
 
+  let navigate = useNavigate()
+  let { name } = useParams()
+  const [nameState, setNameState] = useState(name)
 
+  useEffect(() => {
+    setNameState(name)
+  })
   useEffect(() => {
     const abortCtrl = new AbortController();
     const opts = { signal: abortCtrl.signal };
 
-    axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`, { opts })
+
+    axios.get(`https://pokeapi.co/api/v2/pokemon/${nameState}`, { opts })
       .then(req => {
         setImageUrl(req.data.sprites.other['official-artwork'].front_default);
         setAbilities(req.data.abilities);
@@ -28,14 +36,14 @@ const Card = ({ name, handleClick }) => {
 
     return () => abortCtrl.abort();
 
-  }, [name])
+  }, [nameState])
 
 
 
   return (
     <>
       <div className={bstyles['action-bar']}>
-        <button className={bstyles['action-bar__button']} onClick={() => handleClick(false, pokemonItem.name)} >Back</button>
+        <button className={bstyles['action-bar__button']} onClick={() => navigate('/')} >Back</button>
       </div>
       <div className={styles['card']}>
         <figure className={styles['card__figure']}>
@@ -99,4 +107,4 @@ const Card = ({ name, handleClick }) => {
   );
 }
 
-export default Card;
+export default CardDetails;

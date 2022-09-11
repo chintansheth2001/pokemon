@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Filterbox from '../filterbox/Filterbox'
 import Card from '../card/Card'
-import CardDetails from '../carddetails/CardDetails'
 import Pagination from '../pagination/Pagination';
 
 import axios from 'axios'
@@ -15,8 +13,6 @@ const CardListing = () => {
   const [nURL, setNURL] = useState('')
   const [pURL, setPURL] = useState('https://pokeapi.co/api/v2/pokemon')
   const [pageStatus, setPageStatus] = useState(true)
-  const [showDetail, setShowDetail] = useState(false)
-  const [pokemanName, setPokemanName] = useState('')
 
   useEffect(() => {
     const abortCtrl = new AbortController();
@@ -38,10 +34,6 @@ const CardListing = () => {
   const next = () => setCURL(nURL);
   const previous = () => setCURL(pURL);
 
-  const handleClick = (show, name) => {
-    setShowDetail(show)
-    setPokemanName(name)
-  }
 
   if (pageStatus) {
     return 'Show Loader'
@@ -49,26 +41,14 @@ const CardListing = () => {
 
   return (
     <>
-      <Filterbox handleOnEnter={handleClick} />
-
-      {showDetail ?
-
-        <CardDetails name={pokemanName} handleClick={handleClick} />
-        :
-        <div>
-          <Pagination next={nURL ? next : null} previous={pURL ? previous : null} />
-          <div className={styles['listing']}>
-            {list.map((item, i) => {
-              return <Card key={i} pokemon={item} handleClick={handleClick} />
-            })}
-          </div>
-          <Pagination next={nURL ? next : null} previous={pURL ? previous : null} />
-        </div>
-      }
-
-
+      <Pagination next={nURL ? next : null} previous={pURL ? previous : null} />
+      <div className={styles['listing']}>
+        {list.map((item, i) => {
+          return <Card key={i} pokemon={item} />
+        })}
+      </div>
+      <Pagination next={nURL ? next : null} previous={pURL ? previous : null} />
     </>
-
   );
 }
 

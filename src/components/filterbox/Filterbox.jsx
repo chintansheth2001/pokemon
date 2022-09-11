@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './Filterbox.module.css'
 
 import axios from 'axios'
@@ -8,6 +9,8 @@ const Filterbox = ({ handleOnEnter }) => {
   const [loadingStatus, setLoadingStatus] = useState(true)
   const [searchText, setSearchText] = useState('')
   const [searchFocus, setSearchFocus] = useState(false)
+
+  let navigate = useNavigate()
 
   useEffect(() => {
     const abortCtrl = new AbortController();
@@ -36,19 +39,6 @@ const Filterbox = ({ handleOnEnter }) => {
 
   const inputChange = (event) => {
     setSearchText(event.target.value)
-  }
-
-  const handleClick = (show, name) => {
-    setSearchFocus(false)
-    handleOnEnter(show, name)
-  }
-
-  const handleKeyUp = (show, name, e) => {
-    if (e.key === 'Enter') {
-      setSearchFocus(false)
-      handleOnEnter(show, name)
-
-    }
   }
 
 
@@ -85,8 +75,8 @@ const Filterbox = ({ handleOnEnter }) => {
           }).map((val, key) => {
             return (
               <div
-                onClick={(e) => handleClick(true, val.name)}
-                onKeyUp={(e) => handleKeyUp(true, val.name, e)}
+                onClick={(e) => navigate(`/details/${val.name}`)}
+
                 className={styles['filter__item']}
                 key={key} tabIndex="0">
                 {val.name}

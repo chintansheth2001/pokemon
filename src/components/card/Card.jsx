@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 import styles from './Card.module.css'
-const Card = ({ pokemon, handleClick }) => {
+const Card = ({ pokemon }) => {
 
 
   const [pokemonItem, setPokemonItem] = useState({})
   const [imageUrl, setImageUrl] = useState('')
+  const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -27,7 +29,7 @@ const Card = ({ pokemon, handleClick }) => {
 
   return (
     <>
-      <div className={styles['card']} onClick={() => handleClick(true, pokemonItem.name)}>
+      <div className={styles['card']} onClick={() => navigate(`/details/${pokemonItem.name}`)}>
         <img className={styles['card__img']} src={imageUrl} alt="" />
         <div className={styles['card__details']}>
           <div className={styles['name']}><strong>{pokemonItem.name}</strong></div>
