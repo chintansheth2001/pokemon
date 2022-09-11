@@ -1,5 +1,7 @@
 .app {
   max-width: 1080px;
+  padding: 16px;
   margin: auto;
+  box-sizing: border-box;
 
 }
