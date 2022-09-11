@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+### `Project Images`
+![image](https://github.com/chintansheth2001/pokemon/blob/main/readme/img1.jpeg?raw=true)
+![image](https://github.com/chintansheth2001/pokemon/blob/main/readme/img2.jpeg?raw=true)
+![image](https://github.com/chintansheth2001/pokemon/blob/main/readme/img3.jpeg?raw=true)
+![image](https://github.com/chintansheth2001/pokemon/blob/main/readme/img4.jpeg?raw=true)
+
 ## Available Scripts
 
 Clone project and  install package
