@@ -50,7 +50,7 @@ const Filterbox = ({ handleOnEnter }) => {
     <div className={styles['wrapper']}
     >
       <input
-        autocomplete="off"
+        autoComplete="off"
         className={styles['filter']}
         type="text" id="filter"
         placeholder="Search for pokemon.."

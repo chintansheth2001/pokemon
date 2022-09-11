@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Card from '../card/Card'
 import Pagination from '../pagination/Pagination';
 
@@ -8,31 +9,34 @@ import styles from './CardListing.module.css'
 
 
 const CardListing = () => {
+  let { page } = useParams()
   const [list, setList] = useState([])
-  const [cURL, setCURL] = useState('https://pokeapi.co/api/v2/pokemon')
-  const [nURL, setNURL] = useState('')
-  const [pURL, setPURL] = useState('https://pokeapi.co/api/v2/pokemon')
   const [pageStatus, setPageStatus] = useState(true)
+  const [totalPage, setTotalPage] = useState(1)
+  const [currentPage, setCuttentPage] = useState(page)
+
+  useEffect(() => {
+    setCuttentPage(page)
+  })
 
   useEffect(() => {
     const abortCtrl = new AbortController();
     const opts = { signal: abortCtrl.signal };
     setPageStatus(true)
 
-    axios.get(cURL, { opts })
+
+    axios.get(`https://pokeapi.co/api/v2/pokemon?offset=${(Number(currentPage) - 1) * 20}&limit=20`, { opts })
       .then(req => {
-        setNURL(req.data.next);
-        setPURL(req.data.previous);
         setList(req.data.results);
         setPageStatus(false);
+        setTotalPage(Math.ceil(req.data.count / 20))
       })
 
     return () => abortCtrl.abort();
 
-  }, [cURL])
+  }, [currentPage])
 
-  const next = () => setCURL(nURL);
-  const previous = () => setCURL(pURL);
+
 
 
   if (pageStatus) {
@@ -41,13 +45,13 @@ const CardListing = () => {
 
   return (
     <>
-      <Pagination next={nURL ? next : null} previous={pURL ? previous : null} />
+      <Pagination totalPage={totalPage} />
       <div className={styles['listing']}>
         {list.map((item, i) => {
           return <Card key={i} pokemon={item} />
         })}
       </div>
-      <Pagination next={nURL ? next : null} previous={pURL ? previous : null} />
+      <Pagination totalPage={totalPage} />
     </>
   );
 }

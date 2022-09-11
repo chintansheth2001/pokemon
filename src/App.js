@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route,  } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate  } from 'react-router-dom';
 
 import Filterbox from './components/filterbox/Filterbox';
 
@@ -16,7 +16,8 @@ function App() {
     <Router>
       <Filterbox/>
       <Routes>
-        <Route path="/" element={<Home />}/>
+        <Route path="/" element={<Navigate to="/1" />} />
+        <Route path="/:page" element={<Home />}/>
         <Route path="/details/:name" element={<Details />}/>
         <Route path="*" element={<Error />} />
       </Routes>
